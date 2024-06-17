@@ -17,12 +17,16 @@ namespace CountingPrototype
         int ballNum = 0;
 
         List<GameObject> ballsInBox;
+        void OnEnable()
+        {
+            GameManager gameManager = GameObject.FindObjectOfType<GameManager>();
+            gameManager.OnNextLevel += Reset;
+        }
         void Start()
         {
             countingManager = GameObject.FindObjectOfType<CountingManager>();
 
-            GameManager gameManager = GameObject.FindObjectOfType<GameManager>();
-            gameManager.OnNextLevel += Reset;
+
 
             multiplierText.text = "X " + boxScoreMultiplier;
 

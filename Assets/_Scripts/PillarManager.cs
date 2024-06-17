@@ -39,8 +39,9 @@ namespace CountingPrototype
 
             Debug.Log("柱子数组长度" + pillars.Length);
         }
-        void Start()
+        void OnEnable()
         {
+            Debug.Log("PillarManager 注册NextLevel");
             gameManager = GameObject.FindObjectOfType<GameManager>();
             gameManager.OnNextLevel += NewLevel;
 
@@ -48,6 +49,7 @@ namespace CountingPrototype
 
         void NewLevel()
         {
+            Debug.Log("PillarManager 绘制NewLevel");
 
             for (var i = 0; i < pillars.Length; i++)
             {

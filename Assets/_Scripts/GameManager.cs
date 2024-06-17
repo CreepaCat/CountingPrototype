@@ -53,6 +53,8 @@ namespace CountingPrototype
 
             levelSuccess.SetActive(false);
             levelFailure.SetActive(false);
+
+            SetMode(PlayerSetting.Instance.gameMode);
         }
 
         void Update()
@@ -75,6 +77,8 @@ namespace CountingPrototype
 
         public void SetMode(int modeIndex)
         {
+
+            Debug.Log("GameManager SetMode");
             currentMode = modeIndex;
             currentTargetScore = 100; //初始目标分
 

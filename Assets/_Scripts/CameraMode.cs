@@ -7,11 +7,9 @@ namespace CountingPrototype
         [SerializeField] bool isPerspective = false;
         [SerializeField] Renderer background;
 
-        public void ChangeMode()
+        void Start()
         {
-
-            Camera.main.orthographic = !Camera.main.orthographic;
-
+            Camera.main.orthographic = PlayerSetting.Instance.is2DCamera;
             if (Camera.main.orthographic)
             {
                 background.material.SetTextureScale("_MainTex", new Vector2(100, 100));
@@ -21,8 +19,6 @@ namespace CountingPrototype
             {
                 background.material.SetTextureScale("_MainTex", new Vector2(10, 10));
             }
-
-
         }
 
 

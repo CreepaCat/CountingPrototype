@@ -21,12 +21,16 @@ namespace CountingPrototype
         //每过一关，添加一个特殊小球
         int specialBallNum = 0;
         int normalBallNum = 0;
+        void OnEnable()
+        {
+            gameManager = GameObject.FindObjectOfType<GameManager>();
+            gameManager.OnNextLevel += Reset;
+        }
         void Start()
         {
             // ballSpawnButton.onClick.AddListener(SpawnBall);
-            ballAmountRemain = playerBallNum;
-            gameManager = GameObject.FindObjectOfType<GameManager>();
-            gameManager.OnNextLevel += Reset;
+            // ballAmountRemain = playerBallNum;
+
         }
 
         void Update()

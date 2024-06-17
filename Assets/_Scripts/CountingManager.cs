@@ -10,7 +10,7 @@ namespace CountingPrototype
 
         public event Action OnScoreChange;
         SpawnManager spawnManager;
-        void Start()
+        void OnEnable()
         {
             spawnManager = GameObject.FindObjectOfType<SpawnManager>();
             GameObject.FindObjectOfType<GameManager>().OnNextLevel += Reset;

@@ -10,13 +10,18 @@ namespace CountingPrototype.UI
         [SerializeField] TextMeshProUGUI targetScoreText = null;
 
         GameManager gameManager;
-        void Start()
+
+        void OnEnable()
         {
             countingManager = GameObject.FindObjectOfType<CountingManager>();
             gameManager = GameObject.FindObjectOfType<GameManager>();
             gameManager.OnNextLevel += ResetUI;
 
             countingManager.OnScoreChange += UpdateUI;
+        }
+        void Start()
+        {
+
             ResetUI();
         }
 
