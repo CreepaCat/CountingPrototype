@@ -76,7 +76,7 @@ namespace CountingPrototype
 
         private void SavePlayerSettings()
         {
-            PlayerSetting.Instance.playerName = playerNameInput.text;
+            PlayerSetting.Instance.currentPlayerName = playerNameInput.text;
             PlayerSetting.Instance.is2DCamera = is2DCamera;
             PlayerSetting.Instance.SavePlayerSettings();
         }
@@ -84,7 +84,7 @@ namespace CountingPrototype
         private void LoadPlyerSettings()
         {
             PlayerSetting.Instance.LoadPlayerSettings();
-            playerNameInput.text = PlayerSetting.Instance.playerName;
+            playerNameInput.text = PlayerSetting.Instance.currentPlayerName;
             camera2DMode.isOn = PlayerSetting.Instance.is2DCamera;
         }
     }

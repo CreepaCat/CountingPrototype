@@ -12,8 +12,6 @@ namespace CountingPrototype
 
         [SerializeField] GameObject distributeMachine;
 
-
-        [SerializeField] GameObject startPanel;
         [SerializeField] GameObject gamingPanel;
         [SerializeField] GameObject gamePausePanel;
 
@@ -32,6 +30,7 @@ namespace CountingPrototype
         public int CurrentMode => currentMode;
 
         public event Action OnNextLevel;
+        public event Action OnRecordChanged;
 
         bool isGamePaused = false;
         bool isGameActive = false;
@@ -70,8 +69,6 @@ namespace CountingPrototype
                 {
                     ResumeGame();
                 }
-
-
             }
         }
 
@@ -82,7 +79,6 @@ namespace CountingPrototype
             currentMode = modeIndex;
             currentTargetScore = 100; //初始目标分
 
-            startPanel.SetActive(false);
             gamingPanel.SetActive(true);
 
             distributeMachine.SetActive(true);
@@ -97,6 +93,7 @@ namespace CountingPrototype
             currentTargetScore += levelScoreIncrease * currentMode;
 
             levelSuccess.SetActive(false);
+
 
             OnNextLevel?.Invoke();
         }
@@ -128,13 +125,31 @@ namespace CountingPrototype
         {
             isGamePaused = false;
             Time.timeScale = 1;//恢复时间
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+
+            //检查更新玩家记录
+            // UpdateRecord();
+
+            SceneManager.LoadSceneAsync(0);
         }
 
+        private void CheckUpdateRecord()
+        {
+            //只在关卡结束时检查更新记录
+
+            if (countingManager.GetCurrentScore() >= PlayerSetting.Instance.bestScore)
+            {
+
+                PlayerSetting.Instance.UpdateRecord(countingManager.GetCurrentScore());
+                OnRecordChanged?.Invoke();
+            }
+
+        }
 
         void OnScoreChange()
         {
             ballRemain = spawnManager.BallRemain();
+
+
             //当无剩余小球时，计算是否过关
             CheckLevelEnd();
         }
@@ -154,6 +169,11 @@ namespace CountingPrototype
                 //Game Over
                 levelFailure.SetActive(true);
             }
+
+
+            //检查更新记录
+            CheckUpdateRecord();
+
         }
     }
 }

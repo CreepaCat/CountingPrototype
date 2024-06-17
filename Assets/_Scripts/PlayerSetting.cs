@@ -8,9 +8,15 @@ namespace CountingPrototype
 
         public static PlayerSetting Instance = null;
 
-        public string playerName = "";
+        public string currentPlayerName = "";
         public int gameMode = 1;
         public bool is2DCamera = false;
+
+        //best record
+        public int bestScore = 300;
+        public string bestPlayerName = "Allen";
+
+
         string savePath;
 
         void Awake()
@@ -35,18 +41,24 @@ namespace CountingPrototype
         [System.Serializable]
         class PlayerSettingData
         {
-            public string playerName;
+            public string currentPlayerName;
             public int gameMode;
             public bool is2DCamera;
+
+            public int bestScore = 300;
+            public string bestPlayerName = "Allen";
         }
 
         public void SavePlayerSettings()
         {
 
             PlayerSettingData data = new PlayerSettingData();
-            data.playerName = playerName;
+            data.currentPlayerName = currentPlayerName;
             data.gameMode = gameMode;
             data.is2DCamera = is2DCamera;
+
+            data.bestPlayerName = bestPlayerName;
+            data.bestScore = bestScore;
             // string path = Application.persistentDataPath + "saveFile.json";
 
             File.WriteAllText(savePath, JsonUtility.ToJson(data));
@@ -60,9 +72,13 @@ namespace CountingPrototype
             if (File.Exists(savePath))
             {
                 PlayerSettingData data = JsonUtility.FromJson<PlayerSettingData>(File.ReadAllText(savePath));
-                this.playerName = data.playerName;
+                this.currentPlayerName = data.currentPlayerName;
                 this.gameMode = data.gameMode;
                 this.is2DCamera = data.is2DCamera;
+
+                this.bestScore = data.bestScore;
+                this.bestPlayerName = data.bestPlayerName;
+
                 Debug.Log("Load file " + savePath);
 
             }
@@ -72,9 +88,14 @@ namespace CountingPrototype
 
             }
 
+        }
 
+        public void UpdateRecord(int score)
+        {
+            bestPlayerName = currentPlayerName;
+            bestScore = score;
 
-
+            SavePlayerSettings();
         }
 
     }
